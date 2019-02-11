@@ -5,6 +5,8 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Pokemon(
-    var name: String,
-    var url: String
+    var count: Int,
+    var next: String,
+    var previous: String,
+    var results: Array<BasicPokemon>
 ):Parcelable
