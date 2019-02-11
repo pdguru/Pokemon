@@ -2,10 +2,10 @@ package com.pdg.pokemon.views
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.widget.Toast
 import com.pdg.pokemon.R
 import com.pdg.pokemon.models.PokemonSpecies
 import com.pdg.pokemon.utils.PokemonAdapter
@@ -18,21 +18,22 @@ class SecondActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val secondViewModel = ViewModelProviders.of(this).get(SecondVM::class.java)
+        val intentPokemon = intent.extras.get("SELECTED") as PokemonSpecies
+        Log.i("POKEMON", "Selected pokemon: ${intentPokemon.name}, ${intentPokemon.url}")
 
-        val intent = intent.extras.get("SELECTED") as PokemonSpecies
-        Log.i("POKEMON","🦄😸 Selected pokemon: ${intent.name}, ${intent.url}")
+        //make an initial call to get the pokemon id using the url
+
+        val secondViewModel =
+            ViewModelProviders.of(this, SecondVM.CustomViewModelFactory(intentPokemon.name)).get(SecondVM::class.java)
 
         secondViewModel.pokemons.observe(this, Observer { basicPokemons ->
-            Log.i("POKEMON", "😸 Received: ${basicPokemons?.size}")
-            mainListView.adapter = PokemonAdapter(this@SecondActivity, basicPokemons!!)
-
+            Log.i("POKEMON", "Received: ${basicPokemons?.size}")
+            if(basicPokemons.isNullOrEmpty()){
+                Toast.makeText(this,"Pokemon cannot evolve further!", Toast.LENGTH_LONG).show()
+                finish()
+            }else {
+                mainListView.adapter = PokemonAdapter(this@SecondActivity, basicPokemons!!)
+            }
         })
-
-        mainListView.setOnItemClickListener { parent, view, position, id ->
-            val intent = Intent(this@SecondActivity,SecondActivity::class.java)
-            intent.putExtra("SELECTED", mainListView.adapter.getItem(position) as PokemonSpecies)
-            startActivity(intent)
-        }
     }
 }

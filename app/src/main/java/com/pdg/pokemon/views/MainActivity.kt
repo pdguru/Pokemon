@@ -22,13 +22,14 @@ class MainActivity : AppCompatActivity() {
         val mainViewModel = ViewModelProviders.of(this).get(MainActivityVM::class.java)
 
         mainViewModel.pokemons.observe(this, Observer { basicPokemons ->
-            Log.i("POKEMON", "😸 Received: ${basicPokemons?.size}")
-                mainListView.adapter = PokemonAdapter(this@MainActivity, basicPokemons!!)
+            Log.i("POKEMON", " Received: ${basicPokemons?.size}")
+            mainListView.adapter = PokemonAdapter(this@MainActivity, basicPokemons!!)
 
         })
 
         mainListView.setOnItemClickListener { parent, view, position, id ->
-            val intent = Intent(this@MainActivity,SecondActivity::class.java)
+            Log.i("POKEMON", " clicked: $position")
+            val intent = Intent(this@MainActivity, SecondActivity::class.java)
             intent.putExtra("SELECTED", mainListView.adapter.getItem(position) as PokemonSpecies)
             startActivity(intent)
         }

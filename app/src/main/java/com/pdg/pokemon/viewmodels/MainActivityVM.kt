@@ -21,10 +21,10 @@ class MainActivityVM : ViewModel() {
         pokemons = MutableLiveData()
 
         var resp = NetworkHelper().execute("https://pokeapi.co/api/v2/pokemon?limit=26").get()
-        Log.i("POKEMON", "🦄 Response: $resp")
+        Log.i("POKEMON", " Response: $resp")
 
         val json = Gson().fromJson(resp, Result::class.java)
-        Log.i("POKEMON", "🦄 as jsonResult: ${json}")
+        Log.i("POKEMON", " as jsonResult: ${json}")
 
         val i = ArrayList<PokemonSpecies>()
         for (p in json.results) {
