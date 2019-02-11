@@ -1,5 +1,7 @@
 package com.pdg.pokemon.utils
 
+import android.os.AsyncTask
+import android.util.Log
 import java.io.BufferedOutputStream
 import java.io.ByteArrayOutputStream
 import java.io.IOException
@@ -9,7 +11,11 @@ import java.net.URL
 
 //Original code: git.io/v13pg
 
-object NetworkHelper {
+class NetworkHelper : AsyncTask<String?, Void, String>() {
+    override fun doInBackground(vararg params: String?): String? {
+        Log.i("POKEMON", "Downloading from url")
+        return downloadUrl(params[0]!!)
+    }
 
     @Throws(IOException::class)
     fun downloadUrl(address: String): String? {

@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.pdg.pokemon.R
-import com.pdg.pokemon.models.BasicPokemon
+import com.pdg.pokemon.models.PokemonSpecies
 
-class PokemonAdapter(val context: Context, val basicPokemons: List<BasicPokemon>) :
+class PokemonAdapter(val context: Context, val pokemonSpecies: List<PokemonSpecies>) :
     BaseAdapter() {
 
     override fun getItem(position: Int): Any {
-        return basicPokemons[position]
+        return pokemonSpecies[position]
     }
 
     override fun getItemId(position: Int): Long {
@@ -21,7 +21,7 @@ class PokemonAdapter(val context: Context, val basicPokemons: List<BasicPokemon>
     }
 
     override fun getCount(): Int {
-        return basicPokemons.size
+        return pokemonSpecies.size
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -31,7 +31,7 @@ class PokemonAdapter(val context: Context, val basicPokemons: List<BasicPokemon>
         rowView = inflater.inflate(R.layout.list_item, parent, false)
 
         val text = rowView.findViewById<TextView>(R.id.itemTextView)
-        text.text = basicPokemons[position].name
+        text.text = pokemonSpecies[position].name
 
         return rowView
 
